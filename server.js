@@ -81,7 +81,7 @@ app.use(errorHandler);
 const { startJobs } = require('./src/jobs');
 
 server.listen(env.PORT, () => {
-  console.log(`Server running on port ${env.PORT}`);
+  console.log(`Server running on port ${process.env.PORT}`);
   startJobs();
 });
 
