@@ -3941,3 +3941,24 @@ Inconsistent column data: Malformed ObjectID: provided hex string representation
     at async a (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:130:9551)
     at async Object.createPayment (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\payment\service.js:27:17)
     at async createPayment (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\payment\controller.js:8:20)
+2026-07-02T09:41:53.249Z [ERROR]: PrismaClientInitializationError: 
+Invalid `prisma.oTP.deleteMany()` invocation in
+D:\delivery_app_backend\food_delivery_backend\src\jobs\otpCleanup.js:8:37
+
+  5 
+  6 async function cleanupExpiredOtps() {
+  7   try {
+→ 8     const result = await prisma.oTP.deleteMany(
+error: Environment variable not found: DATABASE_URL.
+  -->  schema.prisma:7
+   | 
+ 6 |   provider = "mongodb"
+ 7 |   url      = env("DATABASE_URL")
+   | 
+
+Validation Error Count: 1
+    at ei.handleRequestError (D:\delivery_app_backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:7568)
+    at ei.handleAndLogRequestError (D:\delivery_app_backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (D:\delivery_app_backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (D:\delivery_app_backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async cleanupExpiredOtps (D:\delivery_app_backend\food_delivery_backend\src\jobs\otpCleanup.js:8:20)
