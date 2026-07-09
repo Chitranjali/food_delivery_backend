@@ -15,6 +15,7 @@ const CUSTOMER         = 'customer';
 const RESTAURANT_OWNER = 'restaurant_owner';
 const DELIVERY         = 'delivery';
 const ADMIN            = 'admin';
+const SELLER           = 'seller';           // generic sellers: grocery, clothing, electronics, etc.
 
 const RBAC = {
   // Auth — public (no role restriction)
@@ -48,10 +49,19 @@ const RBAC = {
   PAYMENT: [CUSTOMER],
 
   // Notifications — any authenticated user
-  NOTIFICATION: [CUSTOMER, RESTAURANT_OWNER, DELIVERY, ADMIN],
+  NOTIFICATION: [CUSTOMER, RESTAURANT_OWNER, SELLER, DELIVERY, ADMIN],
 
   // Admin operations — admin only
   ADMIN_OPS: [ADMIN],
+
+  // Grocery / multi-category store browsing — public (no auth needed)
+  GROCERY_STORE_READ: [],
+
+  // Grocery / multi-category store management — sellers only
+  GROCERY_STORE_WRITE: [SELLER],
+
+  // Grocery product management — sellers only
+  GROCERY_PRODUCT_WRITE: [SELLER],
 };
 
-module.exports = { RBAC, CUSTOMER, RESTAURANT_OWNER, DELIVERY, ADMIN };
+module.exports = { RBAC, CUSTOMER, RESTAURANT_OWNER, SELLER, DELIVERY, ADMIN };

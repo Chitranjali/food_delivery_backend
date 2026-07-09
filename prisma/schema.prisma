@@ -344,3 +344,59 @@ model OrderRequest {
     onDelete: Cascade
   )
 }
+
+// ─── Grocery / Multi-category Store Models ──────────────────────────────────
+// Follows a generic Seller → Store → Product architecture.
+// storeType allows extending to CLOTHING, ELECTRONICS, etc. in the future.
+
+model GroceryStore {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  ownerId        String?  @db.ObjectId
+  storeType      String   @default("GROCERY") // GROCERY | CLOTHING | ELECTRONICS | OTHER
+  name           String
+  description    String?
+  address        String
+  email          String?
+  phone          String?
+  category       String?  // e.g. "Supermarket", "Organic", "Pharmacy"
+  imageUrl       String?
+  bannerUrl      String?
+  rating         Float    @default(0)
+  ratingCount    Int      @default(0)
+  deliveryFee    Float    @default(0)
+  minOrderAmount Float    @default(0)
+  latitude       Float?
+  longitude      Float?
+  isOpen         Boolean  @default(true)
+  isFeatured     Boolean  @default(false)
+  offerTag       String?
+  approvalStatus String   @default("pending") // pending | approved | rejected
+  workingHours   Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  products GroceryProduct[]
+}
+
+model GroceryProduct {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  storeId       String   @db.ObjectId
+  name          String
+  description   String?
+  category      String?
+  brand         String?
+  price         Float
+  originalPrice Float?
+  unit          String?  // ml | g | kg | pcs | L | etc.
+  quantity      Float?   // numeric value of the unit (e.g. 500 for "500 ml")
+  imageUrl      String?
+  stock         Int      @default(0)
+  isAvailable   Boolean  @default(true)
+  rating        Float    @default(0)
+  ratingCount   Int      @default(0)
+  soldCount     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  store GroceryStore @relation(fields: [storeId], references: [id], onDelete: Cascade)
+}
