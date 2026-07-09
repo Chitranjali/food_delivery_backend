@@ -302,3 +302,35 @@ model CartItem {
   cart     Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
   menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
 }
+
+model OrderReplacement {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  // Relations
+  orderId   String   @db.ObjectId
+  userId    String   @db.ObjectId
+
+  // Replacement details
+  reason    String
+  imageUrl  String?
+
+  // Snapshot before replacement
+  oldItems  Json
+
+  // Requested replacement items
+  newItems  Json
+
+  // Workflow status
+  status    String   @default("pending")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+
+  order Order @relation(
+    fields: [orderId],
+    references: [id],
+    onDelete: Cascade
+  )
+}
+

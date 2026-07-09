@@ -92,8 +92,29 @@ async function updateMenuItem(req, res, next) {
   } catch (err) { next(err); }
 }
 
+/** GET /restaurants/replace/:id */
+async function getReplaceOrderRequest(req, res, next){
+  try{
+    const replacement = await service.getReplaceOrderRequest(req.params.id, req.user.id);
+    return success(res, 'Replacement request retrieved', replacement);
+  }catch(err){ next(err); }
+}
+
+async function updateReplaceOrderRequest(req,res,next){
+  try{
+    const result = await service.updateReplaceOrderRequest(
+      req.params.id,
+      req.user.id,
+      req.body.status
+    );
+    return success(res, 'Replacement request updated', result);
+  }catch(err){ next(err); }
+}
+
 module.exports = {
   listRestaurants, getCategories, getBanners, searchRestaurants,
   getSearchHistory, deleteSearchEntry, clearSearchHistory,
   getRestaurantDetails, addMenuItem, updateMenuItem,
+  getReplaceOrderRequest,
+  updateReplaceOrderRequest,
 };

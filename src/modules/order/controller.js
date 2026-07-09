@@ -41,4 +41,22 @@ async function updateOrderStatus(req, res, next) {
   } catch (err) { next(err); }
 }
 
-module.exports = { createOrder, getOrders, cancelOrder, updateOrderStatus };
+/**POST /orders/:id/replace */
+async function replaceOrder(req, res, next){
+  try{
+    const io = req.app.get('io');
+
+    const replacement = await service.replaceOrder(
+      req.params.id,
+      req.user.id,
+      req.body,
+      io
+    );
+
+    return success(res, 'Replace order request created', replacement, 201);
+  }catch(err){
+    next(err);
+  }
+}
+
+module.exports = { createOrder, getOrders, cancelOrder, updateOrderStatus, replaceOrder };

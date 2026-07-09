@@ -2,6 +2,7 @@
 
 const prisma = require('../../config/db');
 const AppError = require('../../common/utils/AppError');
+const orderService = require('../order/service');
 
 /** List restaurants with optional category filter and pagination. */
 async function listRestaurants({ page = 1, limit = 20, category } = {}) {
@@ -150,8 +151,81 @@ async function updateMenuItem(restaurantId, itemId, ownerId, data) {
   return prisma.menuItem.update({ where: { id: itemId }, data });
 }
 
+async function getReplaceOrderRequest(replacementId, ownerId){
+  const replacement = await prisma.replaceOrder.findUnique({
+    where:{ id: replacementId },
+    include:{
+      order:{
+        include:{
+          restaurant:true,
+          user:{
+            select:{ id:true, name:true, phone:true }
+          }
+        }
+      }
+    }
+  });
+
+  if(!replacement){
+    throw new AppError(404, 'NOT_FOUND', 'Replacement request not found');
+  }
+
+  if(replacement.order.restaurant.ownerId !== ownerId){
+    throw new AppError(403, 'FORBIDDEN', 'You cannot access this request');
+  }
+
+  return replacement;
+}
+
+async function updateReplaceOrderRequest(replacementId, ownerId, status){
+  const replacement = await getReplaceOrderRequest(replacementId, ownerId);
+
+
+
+  if(status === 'accepted'){
+    const newOrder = await orderService.createOrder(
+      replacement.userId,
+      {
+        restaurant_id: replacement.order.restaurantId,
+        items: replacement.newItems.map((item)=>({
+          menu_item_id: item.menuItemId,
+          quantity: item.quantity
+        }))
+      },{
+        addressLine: replacement.order.deliveryAddress,
+        addressLat: replacement.order.deliveryLat,
+        addressLng: replacement.order.deliveryLng
+      }
+    );
+
+    await prisma.order.update({
+      where:{ id: newOrder.id },
+      data:{ totalAmount:0 }
+    });
+
+    await prisma.replaceOrder.update({
+      where:{ id: replacementId },
+      data:{ status:'accepted' }
+    });
+
+    return newOrder;
+  }
+
+  if(status === 'rejected'){
+    // TODO: continue rejection flow
+    return prisma.replaceOrder.update({
+      where:{ id: replacementId },
+      data:{ status:'rejected' }
+    });
+  }
+
+  throw new AppError(400, 'INVALID_STATUS', 'Invalid replacement status');
+}
+
 module.exports = {
   listRestaurants, searchRestaurants, getSearchHistory, deleteSearchEntry,
   clearSearchHistory, getCategories, getBanners, getRestaurantDetails,
   addMenuItem, updateMenuItem,
+  getReplaceOrderRequest,
+  updateReplaceOrderRequest,
 };
