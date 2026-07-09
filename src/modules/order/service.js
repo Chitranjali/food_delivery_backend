@@ -4,6 +4,7 @@ const prisma = require('../../config/db');
 const AppError = require('../../common/utils/AppError');
 const ORDER_STATUS = require('../../common/constants/orderStatus');
 const notificationService = require('../notification/service');
+const REPLACE_ORDER_STATUS = require('../../common/constants/replaceOrderStatus');
 
 const VALID_TRANSITIONS = {
   [ORDER_STATUS.PENDING]:          [ORDER_STATUS.CONFIRMED, ORDER_STATUS.CANCELLED],
@@ -208,7 +209,7 @@ async function replaceOrder(orderId, customerId, { reason, image_url, items }, i
       imageUrl: image_url,
       oldItems: order.items,
       newItems: replaceOrderItems,
-      status: 'pending'
+      status: REPLACE_ORDER_STATUS.PENDING
     }
   });
 

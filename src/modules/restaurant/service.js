@@ -151,6 +151,13 @@ async function updateMenuItem(restaurantId, itemId, ownerId, data) {
   return prisma.menuItem.update({ where: { id: itemId }, data });
 }
 
+
+/**
+ * 
+ * @param {*} replacementId 
+ * @param {*} ownerId 
+ * @returns 
+ */
 async function getReplaceOrderRequest(replacementId, ownerId){
   const replacement = await prisma.replaceOrder.findUnique({
     where:{ id: replacementId },
