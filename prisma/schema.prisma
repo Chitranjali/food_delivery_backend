@@ -344,7 +344,7 @@ model OrderRequest {
 // Follows a generic Seller → Store → Product architecture.
 // storeType allows extending to CLOTHING, ELECTRONICS, etc. in the future.
 
-model GroceryStore {
+model Store {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   ownerId        String?  @db.ObjectId
   storeType      String   @default("GROCERY") // GROCERY | CLOTHING | ELECTRONICS | OTHER
