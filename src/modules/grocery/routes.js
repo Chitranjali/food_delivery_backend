@@ -21,6 +21,54 @@ const {
 
 const router = Router();
 
+// ---------------- PUBLIC STORE APIs ----------------
+
+// List all approved grocery stores
+router.get(
+  '/',
+  controller.listStores
+);
+
+router.get(
+    '/seller/store',
+    ...sellerGuard,
+    controller.getSellerStore
+);
+
+// Get a single grocery store
+router.get(
+  '/:id',
+  controller.getStore
+);
+
+// List products of a store
+router.get(
+  '/:id/products',
+  controller.listStoreProducts
+);
+
+// Search grocery products
+router.get(
+  '/products/search',
+  controller.searchProducts
+);
+
+// Get single product
+router.get(
+  '/products/:id',
+  controller.getProduct
+);
+
+
+
+router.patch(
+    '/:storeId/toggle-open',
+    ...sellerGuard,
+    controller.toggleStoreOpen
+);
+
+
+// Seller routes
 router.post(
   '/profile',
   ...sellerGuard,

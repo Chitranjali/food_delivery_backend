@@ -4208,3 +4208,9 @@ Inconsistent column data: Malformed ObjectID: provided hex string representation
     at async a (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:130:9551)
     at async Object.updateProduct (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\service.js:198:19)
     at async updateProduct (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\controller.js:93:21)
+2026-07-14T10:19:17.088Z [INFO]: [jobs] Starting background jobs...
+2026-07-14T10:19:17.132Z [INFO]: [otpCleanup] Scheduled to run every 10 minutes
+2026-07-14T10:24:52.899Z [INFO]: [jobs] Starting background jobs...
+2026-07-14T10:24:52.915Z [INFO]: [otpCleanup] Scheduled to run every 10 minutes
+2026-07-14T10:28:23.435Z [INFO]: [jobs] Starting background jobs...
+2026-07-14T10:28:23.451Z [INFO]: [otpCleanup] Scheduled to run every 10 minutes
