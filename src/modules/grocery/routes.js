@@ -32,6 +32,7 @@ router.put(
   '/profile',
   authenticate,
   ...sellerGuard,
+  validate(updateStoreSchema),
   controller.updateStore
 );
 
@@ -43,6 +44,13 @@ router.post(
   controller.createProduct
 );
 
+// Search products
+router.get(
+  '/products/search',
+  controller.searchProducts
+);
+
+
 // PATCH  /api/grocery/products/:id
 router.patch(
   '/products/:id',
@@ -51,10 +59,19 @@ router.patch(
   controller.updateProduct
 );
 
+// PATCH  /api/grocery/products/:id/stock
+router.patch(
+    '/products/:id/stock',
+    ...sellerGuard,
+    validate(updateStockSchema),
+    controller.updateStock
+);
+
 // PATCH  /api/grocery/products/:id/toggle
 router.patch(
   '/products/:id/toggle',
   ...sellerGuard,
+  validate(updateProductSchema),
   controller.toggleProductAvailability);
 
 // DELETE /api/grocery/products/:id 
@@ -65,3 +82,25 @@ router.delete(
 );
 
 module.exports = router;
+
+
+// GET product by id
+router.get(
+  '/products/:id',
+  controller.getProduct
+);
+
+// GET all products of a store
+router.get(
+  '/:id/products',
+  controller.listStoreProducts
+);
+
+
+// Update stock
+router.patch(
+  '/products/:id/stock',
+  ...sellerGuard,
+  validate(updateStockSchema),
+  controller.updateStock
+);
