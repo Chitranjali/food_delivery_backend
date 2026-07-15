@@ -58,6 +58,33 @@ async function createOrder(customerId, { store_id, address_id, items, store_type
     });
   }
 
+  // Grocery stock & availability validation
+if (store_type === "grocery") {
+  const productMap = Object.fromEntries(
+    menuItems.map(product => [product.id, product])
+  );
+
+  for (const item of items) {
+    const product = productMap[item.item_id];
+
+    if (!product.isAvailable) {
+      throw new AppError(
+        400,
+        "PRODUCT_UNAVAILABLE",
+        `${product.name} is currently unavailable`
+      );
+    }
+
+    if (item.quantity > product.stock) {
+      throw new AppError(
+        400,
+        "INSUFFICIENT_STOCK",
+        `Only ${product.stock} unit(s) of ${product.name} are available`
+      );
+    }
+  }
+}
+
   // Fetch all requested menu items that belong to the restaurant
 
   if (menuItems.length !== itemIds.length) {

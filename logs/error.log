@@ -4043,3 +4043,86 @@ Inconsistent column data: Malformed ObjectID: provided hex string representation
     at async a (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:130:9551)
     at async Object.updateProduct (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\service.js:198:19)
     at async updateProduct (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\controller.js:93:21)
+2026-07-15T18:13:39.345Z [ERROR]: PrismaClientKnownRequestError: 
+Invalid `prisma.user.create()` invocation in
+C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\auth\service.js:37:34
+
+  34 }
+  35 
+  36 const hashed = await bcrypt.hash(password, 10);
+→ 37 const user = await prisma.user.create(
+Unique constraint failed on the constraint: `User_email_key`
+    at ei.handleRequestError (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async Object.register (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\auth\service.js:37:16)
+    at async register (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\auth\controller.js:9:18)
+2026-07-15T18:13:48.202Z [ERROR]: PrismaClientKnownRequestError: 
+Invalid `prisma.user.create()` invocation in
+C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\auth\service.js:37:34
+
+  34 }
+  35 
+  36 const hashed = await bcrypt.hash(password, 10);
+→ 37 const user = await prisma.user.create(
+Unique constraint failed on the constraint: `User_email_key`
+    at ei.handleRequestError (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async Object.register (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\auth\service.js:37:16)
+    at async register (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\auth\controller.js:9:18)
+2026-07-15T18:23:13.447Z [ERROR]: PrismaClientValidationError: 
+Invalid `prisma.cart.create()` invocation in
+C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\cart\service.js:95:30
+
+  92 const data = { userId };
+  93 if (store_type === 'restaurant') data.restaurantId = sellerItem.restaurantId;
+  94 if (store_type === 'grocery') data.storeId = sellerItem.storeId;
+→ 95 cart = await prisma.cart.create({
+       data: {
+         userId: "6a57cdfb336452834df29c5f",
+         storeId: "6a5106f6d501e6cf0c7adafa",
+         ~~~~~~~
+     ?   id?: String,
+     ?   restaurantId?: String | Null,
+     ?   createdAt?: DateTime,
+     ?   updatedAt?: DateTime,
+     ?   items?: CartItemUncheckedCreateNestedManyWithoutCartInput
+       }
+     })
+
+Unknown argument `storeId`. Available options are marked with ?.
+    at Nn (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:29:1363)
+    at ei.handleRequestError (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:6911)
+    at ei.handleAndLogRequestError (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async Object.addItem (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\cart\service.js:95:12)
+    at async addItem (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\cart\controller.js:15:18)
+2026-07-15T18:29:27.130Z [ERROR]: TypeError: Cannot read properties of null (reading 'groceryProductId')
+    at Object.updateItemQuantity (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\cart\service.js:172:12)
+    at async updateItemQuantity (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\cart\controller.js:29:18)
+2026-07-15T18:48:33.740Z [ERROR]: TypeError: Cannot read properties of undefined (reading 'findUnique')
+    at assertOwnership (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\service.js:25:43)
+    at Object.createProduct (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\service.js:189:9)
+    at createProduct (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\controller.js:85:35)
+    at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\common\middleware\validate.js:16:7
+    at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\common\middleware\authorize.js:17:7
+    at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
+2026-07-15T18:48:50.605Z [ERROR]: TypeError: Cannot read properties of undefined (reading 'findFirst')
+    at Object.updateStore (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\service.js:110:43)
+    at updateStore (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\controller.js:27:33)
+    at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\common\middleware\validate.js:16:7
+    at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\common\middleware\authorize.js:17:7
+    at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\route.js:157:13)

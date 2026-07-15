@@ -51,7 +51,31 @@ async function addItem(userId, { item_id, store_type, quantity }) {
     sellerItem = await prisma.groceryProduct.findUnique({ where: { id: item_id } });
   }
   if (!sellerItem) throw new AppError(404, 'NOT_FOUND', 'Item not found');
+  if (store_type === "grocery") {
+    if (!sellerItem.isAvailable) {
+        throw new AppError(
+            400,
+            "PRODUCT_UNAVAILABLE",
+            "Product is unavailable"
+        );
+    }
 
+    if (sellerItem.stock <= 0) {
+        throw new AppError(
+            400,
+            "OUT_OF_STOCK",
+            "Product is out of stock"
+        );
+    }
+
+    if (quantity > sellerItem.stock) {
+        throw new AppError(
+            400,
+            "INSUFFICIENT_STOCK",
+            `Only ${sellerItem.stock} items available`
+        );
+    }
+}
   let cart = await prisma.cart.findUnique({ where: { userId } });
 
   if (cart) {
@@ -145,6 +169,29 @@ async function updateItemQuantity(userId, cartItemId, quantity) {
   const item = await prisma.cartItem.findFirst({
     where: { id: cartItemId, cartId: cart.id },
   });
+  if (item.groceryProductId) {
+    const product = await prisma.groceryProduct.findUnique({
+        where: {
+            id: item.groceryProductId
+        }
+    });
+
+    if (!product.isAvailable) {
+        throw new AppError(
+            400,
+            "PRODUCT_UNAVAILABLE",
+            "Product is unavailable"
+        );
+    }
+
+    if (quantity > product.stock) {
+        throw new AppError(
+            400,
+            "INSUFFICIENT_STOCK",
+            `Only ${product.stock} items available`
+        );
+    }
+}
   if (!item) throw new AppError(404, 'NOT_FOUND', 'Cart item not found');
 
   await prisma.cartItem.update({ where: { id: cartItemId }, data: { quantity } });
