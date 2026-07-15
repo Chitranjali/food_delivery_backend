@@ -4126,3 +4126,14 @@ Unknown argument `storeId`. Available options are marked with ?.
     at C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\common\middleware\authorize.js:17:7
     at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
     at next (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\route.js:157:13)
+2026-07-15T18:49:34.430Z [ERROR]: TypeError: Cannot read properties of undefined (reading 'findFirst')
+    at Object.createStore (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\service.js:87:51)
+    at createStore (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\modules\grocery\controller.js:9:33)
+    at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\common\middleware\validate.js:16:7
+    at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\route.js:157:13)
+    at C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\src\common\middleware\authorize.js:17:7
+    at Layer.handleRequest (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\isura\Desktop\SMRL-backend\food_delivery_backend\node_modules\router\lib\route.js:157:13)
